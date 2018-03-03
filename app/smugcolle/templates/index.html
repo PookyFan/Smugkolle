@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<title>Smugcolle</title>
+</head>
+<body>
+	<h1>Smugcolle</h1>
+	<p>Baza smug reakcyjnych obrazków z REST API.</p>
+	<img src="{{ smug }}" style="max-height: 300px;">
+	<p>Kliknij <a href="{% url 'get_random' %}">tutaj</a> aby wylosować adres URL obrazka.</p>
+	<p>Kliknij <a href="{% url 'manage_images' %}">tutaj</a> aby zarządzać bazą danych obrazków.</p>
+</body>
+</html>

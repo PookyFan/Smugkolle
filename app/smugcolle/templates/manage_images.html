@@ -1,0 +1,51 @@
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<title>Smugcolle</title>
+	<style>
+	body { padding-right: 100px; }
+	p { margin: 1px; }
+	.delete_confirm { display: none; }
+	.collection_img
+	{
+		border: 1px solid;
+		display: inline-block;
+		padding: 5px;
+	}
+	.post_thumbnail
+	{
+		display: table;
+		margin: 0 auto;
+	}
+	#user_panel { position: absolute; top: 2px; right: 5px; }
+	</style>
+</head>
+<body>
+	{% if not user.is_anonymous %}
+	<div id="user_panel">
+		<p><a href="{% url 'change_password' %}">Zmień hasło</a></p>
+		<p><a href="{% url 'logout' %}">Wyloguj</a></p>
+	</div>
+	{% for image in images %}
+	<div class="collection_img">
+		{% thumbnail image.file "200x200" as pic %}
+		<div class="post_thumbnail"><a href="{{ image.file.url }}" target="_blank"><img src="{{ pic.url }}"></a></div>
+		{% endthumbnail %}
+		<p>Źródło: {{ image.source }}</p>
+		<p>Dodano: {{ image.added_at|date:'d.m.Y H:i:s' }}</p>
+		<p><button onclick="document.getElementById('{{ image.id }}').style.display = 'inline';">Usuń</button></p>
+		<div id="{{ image.id }}" class="delete_confirm">
+			<p>Na pewno? <a href="{% url 'delete' image.id %}"><button>Tak</button></a><button onclick="document.getElementById('{{ image.id }}').style.display = 'none';">Nie</button></p>
+		</div>
+	</div>
+	{% endfor %}
+
+	<h3>Dodaj nowe obrazki</h3>
+	<form enctype="multipart/form-data" action="{% url 'add_many' %}" method="post">
+	<input type="file" name="myfiles" multiple><br><br>
+	<input type="submit" name="upload" value="Wrzuć">
+	</form>
+	{% endif %}
+</body>
+</html>

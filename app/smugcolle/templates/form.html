@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+	<title>Smugcolle</title>
+</head>
+<body>
+	<form action="{{ action }}" method="post">
+	{{ crsf_token }}
+	{{ form.as_p }}
+	<input type="submit" value="Wyślij">
+	</form>
+	{% if message %}<p>{{ message }}</p>{% endif %}
+</body>
+</html>
